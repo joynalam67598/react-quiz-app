@@ -1,5 +1,6 @@
-import Video from "../Videos";
+import Videos from "../Videos";
+import React from 'react';
 
 export default function Home() {
-  return <Video />;
+  return <Videos />;
 }
