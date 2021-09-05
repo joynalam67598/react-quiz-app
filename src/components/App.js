@@ -7,12 +7,12 @@ import Quiz from "./pages/Quiz";
 import Result from './pages/Result';
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext'
+import {AuthProvider} from '../context/AuthContext'
 
 function App() {
 	return (
 		<Router>
-			<AuthContext>
+			<AuthProvider>
 				<Layout>
 					<Switch>
 						<Route exact path={"/"} component={Home}/>
@@ -23,7 +23,7 @@ function App() {
 						<Route component={Error}/>
 					</Switch>
 				</Layout>
-			</AuthContext>
+			</AuthProvider>
 		</Router>
 	);
 }
