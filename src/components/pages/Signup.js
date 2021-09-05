@@ -4,6 +4,7 @@ import Checkbox from "../Checkbox";
 import Form from "../Form";
 import Illustration from "../Illustration";
 import TextInput from "../TextInput";
+import React from 'react';
 
 export default function Signup() {
   return (
@@ -31,7 +32,7 @@ export default function Signup() {
 
           <Checkbox text="I agree to the Terms &amp; Conditions" />
 
-          <Button>Submit Now</Button>
+          <Button><span>Submit</span></Button>
 
           <div className="info">
             Already have an account? <a href="login.html">Login</a> instead.
