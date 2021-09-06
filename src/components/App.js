@@ -1,18 +1,18 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AuthProvider } from '../context/AuthContext';
 import "../styles/App.css";
 import Layout from "./Layout";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
 import Result from './pages/Result';
-import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext'
+import Signup from "./pages/Signup";
 
 function App() {
 	return (
 		<Router>
-			<AuthContext>
+			<AuthProvider>
 				<Layout>
 					<Switch>
 						<Route exact path={"/"} component={Home}/>
@@ -23,7 +23,7 @@ function App() {
 						<Route component={Error}/>
 					</Switch>
 				</Layout>
-			</AuthContext>
+			</AuthProvider>
 		</Router>
 	);
 }

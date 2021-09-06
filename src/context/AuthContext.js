@@ -1,63 +1,68 @@
-import React from 'react';
-import '../firebase'
 import {
-	getAuth, createUserWithEmailAndPassword,
-	signInWithEmailAndPassword, signOut,
+	createUserWithEmailAndPassword,
+	getAuth,
+	onAuthStateChanged,
+	signInWithEmailAndPassword,
+	signOut,
 	updateProfile
-} from 'firebase/auth'
-import {onAuthStateChanged} from 'firebase/firebase-auth';
+} from "firebase/auth";
+import React from "react";
+import "../firebase";
 
 const AuthContext = React.createContext();
 
 export function useAuth() {
-	return React.useContext(AuthContext);
+  return React.useContext(AuthContext);
 }
 
-export function AuthProvider({children}) {
-	const [loading, setLoading] = React.useState(true);
-	const [currentUser, setCurrentUser] = React.useState();
+export function AuthProvider({ children }) {
+  const [loading, setLoading] = React.useState(true);
+  const [currentUser, setCurrentUser] = React.useState();
 
-	React.useEffect(()=>{
-		const auth = getAuth();
-		const unsubscribe = onAuthStateChanged(auth,(user)=>{
-			setCurrentUser(user);
-			setLoading(false);
-		});
-		return unsubscribe;
-	},[]);
+  React.useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+    return unsubscribe;
+  }, []);
 
-	//signup function
-	async function signUp(email, password, username) {
-		const auth = getAuth();
-		await createUserWithEmailAndPassword();
+  //signup function
+	async function signup(email, password, username) {
+    const auth = getAuth();
+    await createUserWithEmailAndPassword(auth, email, password);
 
-		// update profile
-		await updateProfile(auth.currentUser, {display: username});
+    // update profile
+    await updateProfile(auth.currentUser, { displayName : username });
 
-		const user = auth.currentUser;
+    const user = auth.currentUser;
 
-		setCurrentUser({
-			...user
-		});
-	}
+    setCurrentUser({
+      ...user,
+    });
+  }
 
-	function login(email, password) {
-		const auth = getAuth();
-		return signInWithEmailAndPassword(auth, email, password);
-	}
+  function login(email, password) {
+    const auth = getAuth();
+    return signInWithEmailAndPassword(auth, email, password);
+  }
 
-	function logout(email, password) {
-		const auth = getAuth();
-		return signOut(auth);
-	}
+  function logout(email, password) {
+    const auth = getAuth();
+    return signOut(auth);
+  }
 
-	const value = {
-		currentUser, signUp, login, logout
-	}
+  const value = {
+    currentUser,
+    signup,
+    login,
+    logout,
+  };
 
-	return (
-		<AuthContext.Provider value={value}>
-			{!loading && children}
-		</AuthContext.Provider>
-	);
-};
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+}

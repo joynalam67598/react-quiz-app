@@ -1,6 +1,6 @@
-import Checkbox from './Checkbox';
-import classes from '../styles/Answers.module.css'
 import React from 'react';
+import classes from '../styles/Answers.module.css';
+import Checkbox from './Checkbox';
 
 export default function Answers(){
 	return(
