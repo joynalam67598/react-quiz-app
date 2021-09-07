@@ -1,2 +1,2 @@
 # react-quiz-app
-react
+Quiz App using React and Firebase.
