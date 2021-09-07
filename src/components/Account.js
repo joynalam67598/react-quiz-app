@@ -5,7 +5,7 @@ import classes from "../styles/Account.module.css";
 
 export default function Account() {
   const { currentUser, logout } = useAuth();
-  console.log(currentUser);
+  // console.log(currentUser);
   return (
     <div className={classes.account}>
       {currentUser ? (

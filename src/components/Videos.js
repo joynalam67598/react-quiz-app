@@ -16,13 +16,25 @@ export default function Videos() {
           hasMore={hasMore}
           next={() => setPage(page + 8)}
         >
-          {videos.map((video) => ( video.noq>0 ? (
-            <Link to="/quiz" key={video.youtubeID}>
-              <Video title={video.title} id={video.youtubeID} noq={video.noq} />
-            </Link>) : (
-              <Video title={video.title} id={video.youtubeID} noq={video.noq} />
+          {videos.map((video) =>
+            video.noq > 0 ? (
+              <Link to={`/quiz/${video.youtubeID}`} key={video.youtubeID}>
+                <Video
+                  title={video.title}
+                  key={video.youtubeID}
+                  id={video.youtubeID}
+                  noq={video.noq}
+                />
+              </Link>
+            ) : (
+              <Video
+                title={video.title}
+                key={video.youtubeID}
+                id={video.youtubeID}
+                noq={video.noq}
+              />
             )
-          ))}
+          )}
         </InfiniteScroll>
       )}
       {!loading && videos.length === 0 && (

@@ -35,7 +35,6 @@ export default function useVideoList(page) {
         setLoading(false);
         if (snapShot.exists()) {
           // setvideos return object
-          console.log(snapShot.val);
           setVideos((prevVideos) => {
             //  convert the object in a array and add previous videos
             return [...prevVideos, ...Object.values(snapShot.val())];
