@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext";
 import "../styles/App.css";
+import AddVideoForm from "./AddVideoForm";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -20,6 +21,7 @@ function App() {
             <Route exact path={"/"} component={Home} />
             <PublicRoute exact path={"/signup"} component={Signup} />
             <PublicRoute exact path={"/login"} component={Login} />
+            <PrivateRoute exact path={"/addVideo"} component={AddVideoForm} />
             <PrivateRoute exact path={"/quiz/:id"} component={Quiz} />
             <PrivateRoute exact path={"/result/:id"} component={Result} />
             <Route component={Error} />

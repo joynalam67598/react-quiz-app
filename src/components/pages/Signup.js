@@ -8,7 +8,7 @@ export default function Signup() {
       <h1>Create an account</h1>
 
       <div className="column">
-        <Illustration />
+        <Illustration type="signup" />
         <SignUpForm />
       </div>
     </>
