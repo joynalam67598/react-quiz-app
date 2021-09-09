@@ -14,6 +14,7 @@ export default function useVideoList(page) {
   const [error, setError] = React.useState(false);
   const [videos, setVideos] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(true);
+  const [lastIndex, setLastIndex] = React.useState(0);
 
   React.useEffect(() => {
     async function fetchVideos() {
@@ -26,14 +27,17 @@ export default function useVideoList(page) {
         startAt("" + page),
         limitToFirst(8)
       );
+      const allVideoQuery = query(videosRef, orderByKey());
 
       try {
         setError(false);
         setLoading(true);
         // request firebase database
         const snapShot = await get(videoQuery);
+        const snapShot2 = await get(allVideoQuery);
         setLoading(false);
         if (snapShot.exists()) {
+          setLastIndex(snapShot2.val().length);
           // setvideos return object
           setVideos((prevVideos) => {
             //  convert the object in a array and add previous videos
@@ -55,5 +59,6 @@ export default function useVideoList(page) {
     error,
     videos,
     hasMore,
+    lastIndex,
   };
 }

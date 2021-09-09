@@ -2,8 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext";
 import "../styles/App.css";
-import AddVideoForm from "./AddVideoForm";
 import Layout from "./Layout";
+import AddQuiz from "./pages/AddQuiz";
+import AddVideo from "./pages/AddVideo";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
@@ -21,7 +22,8 @@ function App() {
             <Route exact path={"/"} component={Home} />
             <PublicRoute exact path={"/signup"} component={Signup} />
             <PublicRoute exact path={"/login"} component={Login} />
-            <PrivateRoute exact path={"/addVideo"} component={AddVideoForm} />
+            <PrivateRoute exact path={"/addVideo"} component={AddVideo} />
+            <PrivateRoute exact path={"/addQuiz"} component={AddQuiz} />
             <PrivateRoute exact path={"/quiz/:id"} component={Quiz} />
             <PrivateRoute exact path={"/result/:id"} component={Result} />
             <Route component={Error} />

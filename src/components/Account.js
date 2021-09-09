@@ -11,6 +11,7 @@ export default function Account() {
       {currentUser ? (
         <Fragment>
           <Link to="/addVideo">AddVideo</Link>
+          <Link to="/addQuiz">AddQuiz</Link>
           <span className="material-icons-outlined" title="Account">
             account_circle
           </span>

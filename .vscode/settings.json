@@ -40,14 +40,14 @@
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.fontFamily": "monospace",
   "workbench.colorTheme": "Learn with Sumit Theme - Dracula version",
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
 
   // terminal customization
   "workbench.colorCustomizations": {
-    "terminal.background": "#1D2021",
-    "terminal.foreground": "#A89984",
-    "terminalCursor.background": "#A89984",
-    "terminalCursor.foreground": "#A89984",
+    "terminal.background": "#0a0b0c",
+    "terminal.foreground": "#18ff03",
+    "terminalCursor.background": "#fce51c",
+    "terminalCursor.foreground": "#5fff82",
     "terminal.ansiBlack": "#1D2021",
     "terminal.ansiBlue": "#0D6678",
     "terminal.ansiBrightBlack": "#665C54",
@@ -63,7 +63,7 @@
     "terminal.ansiMagenta": "#8F4673",
     "terminal.ansiRed": "#FB543F",
     "terminal.ansiWhite": "#A89984",
-    "terminal.ansiYellow": "#FAC03B"
+    "terminal.ansiYellow": "#c0942e"
   },
   "javascript.validate.enable": false,
   "typescript.validate.enable": false

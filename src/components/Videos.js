@@ -1,6 +1,7 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
+import GridLoader from "react-spinners/GridLoader";
 import useVideoList from "./hooks/useVideoList";
 import Video from "./Video";
 
@@ -8,6 +9,7 @@ export default function Videos() {
   const [page, setPage] = React.useState(1);
   const { loading, videos, error, hasMore } = useVideoList(page);
 
+  console.log(videos);
   return (
     <div>
       {videos.length > 0 && (
@@ -49,7 +51,7 @@ export default function Videos() {
         <div className="error">No data found!</div>
       )}
       {error && <div className="error">There was an error!</div>}
-      {loading && <div>Loading...</div>}
+      <GridLoader loading={loading} size={10} />
     </div>
   );
 }

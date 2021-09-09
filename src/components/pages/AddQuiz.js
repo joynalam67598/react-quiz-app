@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import AddVideoForm from "../AddVideoForm";
+import AddQuizForm from "../AddQuizForm";
 import Illustration from "../Illustration";
 
-export default function AddVideo() {
+export default function AddQuiz() {
   return (
     <Fragment>
-      <h1>Add a youtube video</h1>
+      <h1>Add Quiz</h1>
       <div className="column">
-        <Illustration type="video" />
-        <AddVideoForm />
+        <Illustration type="quiz" />
+        <AddQuizForm />
       </div>
     </Fragment>
   );

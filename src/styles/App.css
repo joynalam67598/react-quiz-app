@@ -34,9 +34,15 @@ h4 {
   padding: 10px 0;
   margin-bottom: 10px;
 }
-
+.loader {
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+}
 .info {
-  margin-top: 1rem;
+  color: var(--successGreen);
+  padding: 0.6rem 1.2rem;
+  margin-top: 10px;
   text-align: center;
 }
 
