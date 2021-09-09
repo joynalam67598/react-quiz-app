@@ -8,8 +8,6 @@ import Video from "./Video";
 export default function Videos() {
   const [page, setPage] = React.useState(1);
   const { loading, videos, error, hasMore } = useVideoList(page);
-
-  console.log(videos);
   return (
     <div>
       {videos.length > 0 && (

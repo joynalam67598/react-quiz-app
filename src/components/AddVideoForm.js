@@ -4,15 +4,14 @@ import { useHistory } from "react-router";
 import ClipLoader from "react-spinners/ClipLoader";
 import Button from "./Button";
 import Form from "./Form";
-import useVideoList from "./hooks/useVideoList";
+import useVideos from "./hooks/useVideos";
 import TextInput from "./TextInput";
 
 export default function AddVideoForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { lastIndex } = useVideoList(0);
+  const { lastIndex } = useVideos();
   const [message, setMessage] = useState("");
-  console.log(message);
   const history = useHistory();
   const [videoDetails, setVideoDetails] = useState({
     noq: "",
