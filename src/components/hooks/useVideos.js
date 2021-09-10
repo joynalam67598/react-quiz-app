@@ -24,11 +24,9 @@ export default function useVideos(videoId = null) {
           let find = 1;
           setVideos(snapShot.val());
           if (videoId) {
-            snapShot.forEach((node) => {
-              if (node.hasChildren(videoId) && find) {
-                setVideo(node);
-                console.log(node);
-                find = 0;
+            snapShot.val().forEach((item) => {
+              if (item.youtubeID === videoId && find) {
+                setVideo(item);
               }
             });
           }
