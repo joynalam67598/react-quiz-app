@@ -1,11 +1,12 @@
 import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
 import React from "react";
 
-export default function useVideos(videoId = null) {
+export default function useVideos(videoID) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [video, setVideo] = React.useState();
   const [videos, setVideos] = React.useState();
+  const [video, setVideo] = React.useState();
+  const [pos, setPos] = React.useState();
   const [lastIndex, setLastIndex] = React.useState(0);
 
   React.useEffect(() => {
@@ -21,12 +22,14 @@ export default function useVideos(videoId = null) {
         setLoading(false);
         if (snapShot.exists()) {
           setLastIndex(snapShot.val().length);
-          let find = 1;
           setVideos(snapShot.val());
-          if (videoId) {
-            snapShot.val().forEach((item) => {
-              if (item.youtubeID === videoId && find) {
+          if (videoID) {
+            let find = 1;
+            snapShot.val().forEach((item, index) => {
+              if (item.youtubeID === videoID && find) {
                 setVideo(item);
+                setPos(index);
+                find = 0;
               }
             });
           }
@@ -40,10 +43,11 @@ export default function useVideos(videoId = null) {
       }
     }
     fetchVideos();
-  }, [videoId]);
+  }, [videoID]);
   return {
     loading,
     error,
+    pos,
     lastIndex,
     video,
     videos,

@@ -1,11 +1,11 @@
 import classes from "../styles/Select.module.css";
 
-export default function Select({ videos, icon, ...rest }) {
+export default function Select({ videos,value, text, icon, ...rest }) {
   return (
     <div className={classes.select}>
-      <select vlaue={""} {...rest}>
-        <option value="" disabled selected>
-          Please, choose video to add quiz!
+      <select value={value} {...rest}>
+        <option value="" disabled >
+          {text}
         </option>
         {videos &&
           videos.map((video) => {
