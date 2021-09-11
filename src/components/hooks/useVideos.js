@@ -4,9 +4,9 @@ import React from "react";
 export default function useVideos(videoID) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [videos, setVideos] = React.useState();
-  const [video, setVideo] = React.useState();
-  const [pos, setPos] = React.useState();
+  const [videos, setVideos] = React.useState([]);
+  const [video, setVideo] = React.useState('');
+  const [pos, setPos] = React.useState(0);
   const [lastIndex, setLastIndex] = React.useState(0);
 
   React.useEffect(() => {
@@ -14,7 +14,6 @@ export default function useVideos(videoID) {
       const db = getDatabase();
       const videosRef = ref(db, "videos");
       const countQuery = query(videosRef, orderByKey());
-
       try {
         setError(false);
         setLoading(true);

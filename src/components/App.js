@@ -4,9 +4,9 @@ import { AuthProvider } from "../context/AuthContext";
 import "../styles/App.css";
 import Layout from "./Layout";
 import AddQuiz from "./pages/AddQuiz";
-import AddVideo from "./pages/AddVideo";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import ManageVideos from "./pages/ManageVideos";
 import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import Signup from "./pages/Signup";
@@ -22,7 +22,11 @@ function App() {
             <Route exact path={"/"} component={Home} />
             <PublicRoute exact path={"/signup"} component={Signup} />
             <PublicRoute exact path={"/login"} component={Login} />
-            <PrivateRoute exact path={"/addVideo"} component={AddVideo} />
+            <PrivateRoute
+              exact
+              path={"/manageVideos"}
+              component={ManageVideos}
+            />
             <PrivateRoute exact path={"/addQuiz"} component={AddQuiz} />
             <PrivateRoute exact path={"/quiz/:id"} component={Quiz} />
             <PrivateRoute exact path={"/result/:id"} component={Result} />
