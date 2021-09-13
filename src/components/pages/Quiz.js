@@ -40,6 +40,7 @@ export default function Quiz() {
   const { location } = history;
   const { state } = location;
   const { videoTitle } = state;
+  console.log(questions);
 
   React.useEffect(() => {
     dispatch({

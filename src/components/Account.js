@@ -10,8 +10,7 @@ export default function Account() {
     <div className={classes.account}>
       {currentUser ? (
         <Fragment>
-          <Link to="/manageVideos">ManageVideos</Link>
-          <Link to="/addQuiz">AddQuiz</Link>
+          <Link to="/manageVideos">Manage Videos</Link>
           <span className="material-icons-outlined" title="Account">
             account_circle
           </span>

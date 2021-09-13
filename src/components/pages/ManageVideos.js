@@ -2,6 +2,8 @@ import AddIcon from "@material-ui/icons/Add";
 import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
 import MaterialTable from "material-table";
 import { useEffect, useReducer, useState } from "react";
+import ReactPlayer from "react-player";
+import { useHistory } from "react-router-dom";
 import GridLoader from "react-spinners/GridLoader";
 import useVideos from "../hooks/useVideos";
 
@@ -33,6 +35,7 @@ export default function ManageVideos() {
   const [error, setError] = useState(false);
   const [cnt, setCnt] = useState(0);
   const [videoList, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchVideos() {
@@ -134,17 +137,34 @@ export default function ManageVideos() {
               icon: "visibility",
               color: "info",
               tooltip: "View Video Details",
-              onClick: () => {
-                //
-              },
+              onClick: () => {},
             },
             {
               icon: "add_box",
               color: "info",
               tooltip: "View Video Details",
-              onClick: () => {},
+              onClick: (event, rowData) => {
+                const video = rowData;
+                history.push({
+                  pathname: `/addQuiz/${rowData.youtubeID}`,
+                  state: {
+                    video,
+                  },
+                });
+              },
             },
           ]}
+          detailPanel={(rowData) => {
+            const videoUrl = `https://www.youtube.com/watch?v=${rowData.youtubeID}`;
+            return (
+              <ReactPlayer
+                url={videoUrl}
+                width="100%"
+                height="20rem"
+                controls
+              />
+            );
+          }}
         />
       )}
     </div>

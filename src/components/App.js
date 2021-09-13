@@ -27,7 +27,7 @@ function App() {
               path={"/manageVideos"}
               component={ManageVideos}
             />
-            <PrivateRoute exact path={"/addQuiz"} component={AddQuiz} />
+            <PrivateRoute exact path={"/addQuiz/:id"} component={AddQuiz} />
             <PrivateRoute exact path={"/quiz/:id"} component={Quiz} />
             <PrivateRoute exact path={"/result/:id"} component={Result} />
             <Route component={Error} />

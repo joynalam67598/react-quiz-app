@@ -1,16 +1,18 @@
 import { getDatabase, ref, set } from "@firebase/database";
 import React, { useState } from "react";
+import { useHistory, useParams } from "react-router";
 import Button from "./Button";
 import Form from "./Form";
-import useVideos from "./hooks/useVideos";
-import Select from "./Select";
 import TextInput from "./TextInput";
 
 export default function AddQuizForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [videoId, setVideoID] = useState("");
-  const { pos, video, videos } = useVideos(videoId);
+  const { id } = useParams();
+  const { location } = useHistory();
+  const { state } = location;
+  const { video } = state;
+
   const [options, setOptions] = useState({
     0: {
       title: "",
@@ -39,13 +41,10 @@ export default function AddQuizForm() {
     }
   };
   const clearField = () => {
-    setVideoID("");
     for (var i = 0; i < 4; i++) options[i].title = "";
     options.title = "";
   };
-  // and if you need the previous information from the targeted name, spread within that object too:
-
-  // setOptions({ ...options, [name]: { ...options[name], title: value } });
+  console.log(video);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,12 +54,12 @@ export default function AddQuizForm() {
         setError(false);
         const { youtubeID, title } = video;
         let { noq } = video;
-        noq = noq + 1;
         const db = getDatabase();
-        const quizRef = ref(db, `quiz/${videoId}/questions/${noq - 1}`);
-        const vedioRef = ref(db, `videos/${pos}`);
+        const quizRef = ref(db, `quiz/${id}/questions/${noq}/options`);
+        const vedioRef = ref(db, `videos/${video.id}`);
         await set(quizRef, options);
         noq = noq + 1;
+        console.log(noq);
         await set(vedioRef, {
           noq,
           youtubeID,
@@ -81,14 +80,11 @@ export default function AddQuizForm() {
     <div>
       {error && <div className="error">There is an error</div>}
       <Form style={{ height: "500px" }} onSubmit={handleSubmit}>
-        <Select
-          text={"Please, select a video to add question"}
-          videos={videos}
-          value={videoId}
-          onChange={(e) => setVideoID(e.target.value)}
-          required
-          icon="arrow_drop_down_circle"
-        />
+        <label
+          style={{ fontSize: "1.1rem" }}
+        >{`Video Title : ${video.title}`}</label>
+        <br />
+
         <TextInput
           type="text"
           name="title"
