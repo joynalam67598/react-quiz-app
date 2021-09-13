@@ -32,6 +32,7 @@ export default function useVideoList(page) {
         setLoading(true);
         // request firebase database
         const snapShot = await get(videoQuery);
+        console.log(snapShot.val());
         setLoading(false);
         if (snapShot.exists()) {
           // setvideos return object

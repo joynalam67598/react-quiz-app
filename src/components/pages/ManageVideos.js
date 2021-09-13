@@ -1,6 +1,8 @@
 import AddIcon from "@material-ui/icons/Add";
+import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
 import MaterialTable from "material-table";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
+import GridLoader from "react-spinners/GridLoader";
 import useVideos from "../hooks/useVideos";
 
 const initialState = [{}];
@@ -26,77 +28,125 @@ const reducer = (state, action) => {
 };
 
 export default function ManageVideos() {
-  const { videos } = useVideos("");
-
+  const { addVideo, updateVideo, deleteVideo } = useVideos("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [cnt, setCnt] = useState(0);
   const [videoList, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({
-      type: "videos",
-      value: videos,
-    });
-  }, [videos]);
+    async function fetchVideos() {
+      const db = getDatabase();
+      const videosRef = ref(db, "videos");
+      const videoQuery = query(videosRef, orderByKey());
+      try {
+        setError(false);
+        setLoading(true);
+        const snapShot = await get(videoQuery);
+        setLoading(false);
+        if (snapShot.exists()) {
+          dispatch({
+            type: "videos",
+            value: snapShot.val(),
+          });
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        setError(true);
+      }
+    }
+    fetchVideos();
+  }, [cnt]);
 
   const columns = [
-    { title: "Serial", field: "sl" },
-    { title: "Title", field: "title" },
-    { title: "Number of Qusetion", field: "noq" },
-    { title: "Youtube Video Id", field: "youtubeID" },
+    { title: "Serial", field: "sl", editable: "never" },
+    {
+      title: "Title",
+      field: "title",
+      validate: (rowData) => rowData.title !== "",
+    },
+    {
+      title: "Number of Qusetion",
+      field: "noq",
+      editable: "never",
+    },
+    {
+      title: "Youtube Video Id",
+      field: "youtubeID",
+      validate: (rowData) => rowData.youtubeID !== "",
+    },
   ];
-
   return (
     <div>
-      <MaterialTable
-        title="Videos Table"
-        data={videoList}
-        columns={columns}
-        options={{
-          export: true,
-          grouping: true,
-          filtering: true,
-        }}
-        editable={{
-          onRowAdd: (newData) =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                /* setData([...data, newData]); */
+      {!loading && videoList.length === 0 && (
+        <div className="error">No data found!</div>
+      )}
+      {error && <div className="error">There was an error!</div>}
+      <GridLoader loading={loading} size={10} />
+      {!loading && (
+        <MaterialTable
+          title="Videos Table"
+          data={videoList}
+          columns={columns}
+          options={{
+            export: true,
+            grouping: true,
+            filtering: true,
+          }}
+          editable={{
+            onRowAdd: (newData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  addVideo(newData);
+                  setCnt((prevCnt) => prevCnt + 1);
+                  resolve();
+                }, 1000);
+              }),
+            onRowUpdate: (newData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  updateVideo(newData);
+                  setCnt((prevCnt) => prevCnt + 1);
+                  resolve();
+                }, 1000);
+              }),
 
-                resolve();
-              }, 1000);
-            }),
-        }}
-        icons={{
-          Add: (props) => (
-            <div>
-              <AddIcon />
-              <p style={{ fontSize: "small" }}>Add Video</p>
-            </div>
-          ),
-        }}
-        actions={[
-          {
-            icon: "edit",
-            tooltip: "Edit video",
-            onClick: (event, rowData) => {
-              // Do save operation
+            onRowDelete: (oldData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  deleteVideo(oldData);
+                  setCnt((prevCnt) => prevCnt + 1);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          icons={{
+            Add: (props) => (
+              <div>
+                <AddIcon />
+                <p style={{ fontSize: "small" }}>Add Video</p>
+              </div>
+            ),
+          }}
+          actions={[
+            {
+              icon: "visibility",
+              color: "info",
+              tooltip: "View Video Details",
+              onClick: () => {
+                //
+              },
             },
-          },
-          {
-            icon: "delete",
-            tooltip: "Delete Video",
-            onClick: (event, rowData) => {
-              // Do save operation
+            {
+              icon: "add_box",
+              color: "info",
+              tooltip: "View Video Details",
+              onClick: () => {},
             },
-          },
-          {
-            icon: "rate_review",
-            tooltip: "View Video",
-            onClick: (event, rowData) => {
-              // Do save operation
-            },
-          },
-        ]}
-      />
+          ]}
+        />
+      )}
     </div>
   );
 }
