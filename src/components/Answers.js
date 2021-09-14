@@ -4,9 +4,10 @@ import classes from "../styles/Answers.module.css";
 import Checkbox from "./Checkbox";
 
 export default function Answers({ options = [], input, handleChange }) {
+ 
   return (
     <div className={classes.answers}>
-      {options.map((option, index) => (
+      {Array.from(options).map((option, index) => (
         <Fragment key={index}>
           {input ? (
             <Checkbox

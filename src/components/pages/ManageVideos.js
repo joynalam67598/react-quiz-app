@@ -146,7 +146,7 @@ export default function ManageVideos() {
               onClick: (event, rowData) => {
                 const video = rowData;
                 history.push({
-                  pathname: `/addQuiz/${rowData.youtubeID}`,
+                  pathname: `/addQuiz`,
                   state: {
                     video,
                   },
@@ -155,7 +155,7 @@ export default function ManageVideos() {
             },
           ]}
           detailPanel={(rowData) => {
-            const videoUrl = `https://www.youtube.com/watch?v=${rowData.youtubeID}`;
+            const videoUrl = `https://www.youtube.com/watch?v=${rowData.youtubeI}`;
             return (
               <ReactPlayer
                 url={videoUrl}

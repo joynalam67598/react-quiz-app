@@ -12,8 +12,8 @@ const initialState = null;
 const reducer = (state, action) => {
   switch (action.type) {
     case "questions":
-      action.value.forEach((question) => {
-        question.options.forEach((option) => {
+      Array.from(action.value).forEach((question) => {
+        Array.from(question.options).forEach((option) => {
           option.checked = false;
         });
       });
@@ -48,6 +48,7 @@ export default function Quiz() {
       value: questions,
     });
   }, [questions]);
+  console.log(qna,'qna')
 
   // hendle when user click the checkbox
   function handelAnswerChange(e, index) {
